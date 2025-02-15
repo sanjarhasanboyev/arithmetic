@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arifmetika O'yini</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <ul class="results" id="results">
+            <h3>Natijalar:</h3>
+        </ul>
+
+        <!-- Modal oynasi -->
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <h2>⏳ Vaqt tugadi!</h2>
+                <ul id="summary">
+                    <li>To'g'ri: <span id="correct">0</span></li>
+                    <li>Noto'g'ri: <span id="wrong">0</span></li>
+                </ul>
+                <button onclick="closeModal()">OK</button>
+            </div>
+        </div>
+        
+        <div id="timer" class="timer">Qolgan vaqt: <span id="time">15</span> soniya</div>
+        <h1>Arifmetika O'yini</h1>
+        <div class="modes">
+            <button class="mode" data-mode="addition">Qo'shish</button>
+            <button class="mode" data-mode="subtraction">Ayirish</button>
+            <button class="mode" data-mode="multiplication">Ko'paytirish</button>
+            <button class="mode" data-mode="division">Bo'lish</button>
+            <button class="mode" data-mode="mixed">Aralash</button>
+        </div>
+        <div id="question" class="question">
+            <span id="num1">?</span>
+            <span id="operator">+</span>
+            <span id="num2">?</span>
+            = <input type="number" id="answer">
+        </div>
+        <button id="check" onclick="checkAnswer()">Tekshirish</button>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
