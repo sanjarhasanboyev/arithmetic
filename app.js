@@ -15,6 +15,8 @@ let wrong = document.getElementById('wrong');
 let stopIntervalTime = document.getElementById('stopInterval');
 let menu = document.getElementById('menu');
 let btnWrapper = document.getElementById('btnWrapper');
+let answer = document.getElementById('answer');
+
 
 let currentSign = null;
 let arithmetic = document.querySelectorAll('.mode');
@@ -25,10 +27,7 @@ arithmetic.forEach(element => {
             e.style.display = 'none';
         });
 
-        menu.style.display = 'block';
-
-        stopIntervalTime.style.display = 'block';
-        timer.style.display = 'flex';
+        sectionInto();
 
         switch (element.dataset.mode) {
             case 'addition':
@@ -57,7 +56,15 @@ arithmetic.forEach(element => {
 
 menu.addEventListener('click', () => {
     displayMenuNone();
+    answer.value = '';
 })
+
+function sectionInto() {
+    btnWrapper.style.display = 'flex';
+    menu.style.display = 'block';
+    stopIntervalTime.style.display = 'block';
+    timer.style.display = 'flex';
+}
 
 function displayMenuNone() {
     arithmetic.forEach(element => {
@@ -68,6 +75,7 @@ function displayMenuNone() {
     question.style.display = 'none';
     btnWrapper.style.display = 'none';
     menu.style.display = 'none';
+    stopInterval();
 }
 
 function displayQuestion() {
@@ -108,7 +116,7 @@ function generateQuestion() {
 }
 
 function checkAnswer() {
-    let answer = parseInt(document.getElementById('answer').value);
+    let userAnswer = parseInt(document.getElementById('answer').value);
     let num1 = parseInt(document.getElementById('num1').textContent);
     let num2 = parseInt(document.getElementById('num2').textContent);
     let randomResult = null;
@@ -118,12 +126,13 @@ function checkAnswer() {
         case '*': randomResult = num1 * num2; break;
         case '/': randomResult = num1 / num2; break;
     }
-    let result = randomResult == answer ? '✔️' : '❌';
+    let result = randomResult == userAnswer ? '✔️' : '❌';
 
     renderResult(result);
-    answerHistory(num1, num2, answer, result, currentSign);
+    answerHistory(num1, num2, userAnswer, result, currentSign);
 
     generateQuestion();
+    answer.value = '';
 }
 
 let historyCount = 0;
