@@ -13,6 +13,8 @@ let question = document.getElementById('question');
 let correct = document.getElementById('correct');
 let wrong = document.getElementById('wrong');
 let stopIntervalTime = document.getElementById('stopInterval');
+let menu = document.getElementById('menu');
+let btnWrapper = document.getElementById('btnWrapper');
 
 let currentSign = null;
 let arithmetic = document.querySelectorAll('.mode');
@@ -23,9 +25,10 @@ arithmetic.forEach(element => {
             e.style.display = 'none';
         });
 
-        clickedBtn.style.display = 'block';
+        menu.style.display = 'block';
+
         stopIntervalTime.style.display = 'block';
-        timer.style.display = 'flex'
+        timer.style.display = 'flex';
 
         switch (element.dataset.mode) {
             case 'addition':
@@ -51,6 +54,21 @@ arithmetic.forEach(element => {
         }
     })
 });
+
+menu.addEventListener('click', () => {
+    displayMenuNone();
+})
+
+function displayMenuNone() {
+    arithmetic.forEach(element => {
+        element.style.display = 'block';
+    })
+    history.style.display = 'none';
+    timer.style.display = 'none';
+    question.style.display = 'none';
+    btnWrapper.style.display = 'none';
+    menu.style.display = 'none';
+}
 
 function displayQuestion() {
     question.style.display = 'block';
@@ -94,14 +112,14 @@ function checkAnswer() {
     let num1 = parseInt(document.getElementById('num1').textContent);
     let num2 = parseInt(document.getElementById('num2').textContent);
     let randomResult = null;
-    switch(currentSign) {
+    switch (currentSign) {
         case '+': randomResult = num1 + num2; break;
         case '-': randomResult = num1 - num2; break;
         case '*': randomResult = num1 * num2; break;
         case '/': randomResult = num1 / num2; break;
     }
     let result = randomResult == answer ? '✔️' : '❌';
-    
+
     renderResult(result);
     answerHistory(num1, num2, answer, result, currentSign);
 

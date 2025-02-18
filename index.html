@@ -35,6 +35,8 @@
             <button class="mode" data-mode="multiplication">Ko'paytirish</button>
             <button class="mode" data-mode="division">Bo'lish</button>
             <button class="mode" data-mode="mixed">Aralash</button>
+            <button id="menu" class="menu-btn mode" data-mode="mixed">Menu</button>
+
         </div>
         <div id="question" class="question">
             <span id="num1">?</span>
@@ -42,7 +44,7 @@
             <span id="num2">?</span>
             = <input type="number" id="answer">
         </div>
-        <div class="btn-wrapper">
+        <div id="btnWrapper" class="btn-wrapper">
             <button class="checkBtn" id="check" onclick="checkAnswer()">Tekshirish</button>
             <button class="checkBtn" id="stopInterval" onclick="stopInterval()">Tugatish</button>
         </div>

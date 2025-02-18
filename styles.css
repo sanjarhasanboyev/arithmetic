@@ -152,3 +152,7 @@ li {
    justify-content: center;
    gap: 10px;
 }
+
+.menu-btn {
+   display: none;
+}
