@@ -26,7 +26,7 @@
                 <button onclick="closeModal()">OK</button>
             </div>
         </div>
-        
+
         <div id="timer" class="timer">Qolgan vaqt: <span id="time">15</span> soniya</div>
         <h1>Arifmetika O'yini</h1>
         <div class="modes">
@@ -42,7 +42,10 @@
             <span id="num2">?</span>
             = <input type="number" id="answer">
         </div>
-        <button id="check" onclick="checkAnswer()">Tekshirish</button>
+        <div class="btn-wrapper">
+            <button class="checkBtn" id="check" onclick="checkAnswer()">Tekshirish</button>
+            <button class="checkBtn" id="stopInterval" onclick="stopInterval()">Tugatish</button>
+        </div>
     </div>
 
     <script src="./app.js"></script>

@@ -8,32 +8,44 @@ let checkedAnswer = document.getElementById('checked-answer');
 let checkedSymbol = document.getElementById('checked-symbol');
 let history = document.getElementById('results');
 let timer = document.getElementById('timer');
+let time = document.getElementById('time');
 let question = document.getElementById('question');
 let correct = document.getElementById('correct');
 let wrong = document.getElementById('wrong');
+let stopIntervalTime = document.getElementById('stopInterval');
 
+let currentSign = null;
 let arithmetic = document.querySelectorAll('.mode');
 arithmetic.forEach(element => {
-    element.addEventListener('click', () => {
+    element.addEventListener('click', (e) => {
+        let clickedBtn = e.target;
+        arithmetic.forEach(e => {
+            e.style.display = 'none';
+        });
+
+        clickedBtn.style.display = 'block';
+        stopIntervalTime.style.display = 'block';
+        timer.style.display = 'flex'
+
         switch (element.dataset.mode) {
             case 'addition':
-                operator.textContent = '+';
-                generateQuestion('+');
+                currentSign = '+'
+                generateQuestion();
                 displayQuestion();
                 break;
             case 'subtraction':
-                operator.textContent = '-';
-                generateQuestion('-');
+                currentSign = '-';
+                generateQuestion();
                 displayQuestion();
                 break;
             case 'multiplication':
-                operator.textContent = 'x';
-                generateQuestion('*');
+                currentSign = '*';
+                generateQuestion();
                 displayQuestion();
                 break;
             case 'division':
-                operator.textContent = '÷';
-                generateQuestion('/');
+                currentSign = '/';
+                generateQuestion();
                 displayQuestion();
                 break;
         }
@@ -48,18 +60,20 @@ function displayQuestion() {
     interval();
 }
 
+let timeFunction = null;
 let interval = () => {
-    let time = document.getElementById('time');
-    let timeValue = time.textContent;
-    const timeFunction = setInterval(() => {
-        time.textContent = timeValue;
-        if (timeValue == 0) {
+    let defaultTime = 30;
+    time.textContent = defaultTime;
+    timeFunction = setInterval(() => {
+        defaultTime--;
+        time.textContent = defaultTime;
+        if (defaultTime == 0) {
+            clearInterval(timeFunction);
             modal.style.display = "flex";
             question.style.display = 'none';
             check.style.display = 'none';
-            clearInterval(timeFunction);
+            stopIntervalTime.style.display = 'none';
         }
-        timeValue--;
     }, 1000);
 }
 
@@ -67,32 +81,38 @@ function closeModal() {
     modal.style.display = "none";
 }
 
-function generateQuestion(sign) {
-    let currentSign = sign;
+function generateQuestion() {
     let num1 = document.getElementById('num1');
     let num2 = document.getElementById('num2');
     operator.textContent = currentSign;
-    num1.textContent = Math.floor(Math.random() * 10);
-    num2.textContent = Math.floor(Math.random() * 10);
+    num1.textContent = Math.floor(Math.random() * 100);
+    num2.textContent = Math.floor(Math.random() * 100);
 }
 
 function checkAnswer() {
-    let answer = document.getElementById('answer').value;
-    let num1 = document.getElementById('num1').textContent;
-    let num2 = document.getElementById('num2').textContent;
-
-    let result = parseInt(num1) + parseInt(num2) == parseInt(answer) ? '✔️' : '❌';
+    let answer = parseInt(document.getElementById('answer').value);
+    let num1 = parseInt(document.getElementById('num1').textContent);
+    let num2 = parseInt(document.getElementById('num2').textContent);
+    let randomResult = null;
+    switch(currentSign) {
+        case '+': randomResult = num1 + num2; break;
+        case '-': randomResult = num1 - num2; break;
+        case '*': randomResult = num1 * num2; break;
+        case '/': randomResult = num1 / num2; break;
+    }
+    let result = randomResult == answer ? '✔️' : '❌';
+    
     renderResult(result);
-    answerHistory(num1, num2, answer, result);
+    answerHistory(num1, num2, answer, result, currentSign);
 
     generateQuestion();
 }
 
 let historyCount = 0;
-function answerHistory(num1, num2, answer, result) {
+function answerHistory(num1, num2, answer, result, sign) {
     historyCount++;
     let li = document.createElement('li');
-    li.textContent = `${historyCount}) ${num1} + ${num2} = ${answer} ${result}`;
+    li.textContent = `${historyCount}) ${num1} ${sign} ${num2} = ${answer} ${result}`;
     history.appendChild(li);
 }
 
@@ -106,4 +126,8 @@ function renderResult(result) {
         wrongCount++;
         wrong.textContent = wrongCount;
     }
+}
+
+function stopInterval() {
+    clearInterval(timeFunction);
 }
