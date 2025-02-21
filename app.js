@@ -57,6 +57,7 @@ arithmetic.forEach(element => {
 menu.addEventListener('click', () => {
     displayMenuNone();
     answer.value = '';
+    clearResults();
 })
 
 function sectionInto() {
@@ -111,9 +112,36 @@ function generateQuestion() {
     let num1 = document.getElementById('num1');
     let num2 = document.getElementById('num2');
     operator.textContent = currentSign;
-    num1.textContent = Math.floor(Math.random() * 100);
-    num2.textContent = Math.floor(Math.random() * 100);
+    console.log(currentSign);
+
+    let inp1 = Math.floor(Math.random() * 100)
+    let inp2 = Math.floor(Math.random() * 100)
+    let maxNum = null;
+    let minNum = null;
+    if (currentSign == '-' || currentSign == '/') {
+        let devidedNumber = [];
+        maxNum = inp1 > inp2 ? inp1 : inp2;
+        minNum = inp1 > inp2 ? inp2 : inp1;
+        num1.textContent = maxNum;
+        num2.textContent = minNum;
+        if (currentSign = '/') {
+            for (let i = 1; i <= maxNum; i++) {
+                if (maxNum % i == 0) {
+                    devidedNumber.push(i);
+                }
+            }
+            minNum = devidedNumber[Math.floor(Math.random() * devidedNumber.length)];
+            num2.textContent = minNum;
+            console.log(devidedNumber);
+            console.log(minNum);
+        }
+    } else {
+        num1.textContent = inp1;
+        num2.textContent = inp2;
+    }
 }
+
+
 
 function checkAnswer() {
     let userAnswer = parseInt(document.getElementById('answer').value);
@@ -126,6 +154,7 @@ function checkAnswer() {
         case '*': randomResult = num1 * num2; break;
         case '/': randomResult = num1 / num2; break;
     }
+
     let result = randomResult == userAnswer ? '✔️' : '❌';
 
     renderResult(result);
@@ -153,6 +182,13 @@ function renderResult(result) {
         wrongCount++;
         wrong.textContent = wrongCount;
     }
+}
+
+function clearResults() {
+    history.innerHTML = '<h3>Natijalar:</h3>';
+    correctCount = 0;
+    wrongCount = 0;
+    historyCount = 0;
 }
 
 function stopInterval() {
